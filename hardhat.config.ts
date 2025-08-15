@@ -1,5 +1,4 @@
 import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
 import * as dotenv from "dotenv";
 
 // dotenv may be missing in the environment; guard the import
@@ -10,7 +9,7 @@ const MANTLE_SEPOLIA = process.env.MANTLE_SEPOLIA_RPC ?? process.env.MANTLE_SEPO
 const ACCOUNT_PRIVATE_KEY = process.env.ACCOUNT_PRIVATE_KEY ?? process.env.PRIVATE_KEY ?? "";
 
 const config: HardhatUserConfig = {
-  defaultNetwork: "mantleSepolia",
+  // defaultNetwork: "mantleSepolia",
   solidity: {
     version: "0.8.19",
     settings: {
@@ -19,16 +18,18 @@ const config: HardhatUserConfig = {
   },
   networks: {
     mantle: {
+      type: "http",
       url: MANTLE_MAINNET,
       accounts: ACCOUNT_PRIVATE_KEY ? [ACCOUNT_PRIVATE_KEY] : [],
       chainId: 5000,
     },
     mantleSepolia: {
+      type: "http",
       url: MANTLE_SEPOLIA,
       accounts: ACCOUNT_PRIVATE_KEY ? [ACCOUNT_PRIVATE_KEY] : [],
-      chainId: 5001,
+      chainId: 5003,
     },
-    hardhat: {},
+    hardhat: { type: "edr-simulated" },
   },
 };
 
