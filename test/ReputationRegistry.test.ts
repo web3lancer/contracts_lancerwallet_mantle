@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import hre from "hardhat";
-const ethers = hre.ethers;
+import hardhat from "hardhat";
+const { ethers } = hardhat as any;
 
 describe("ReputationRegistry", function() {
   it("registers and accepts reviews", async function() {

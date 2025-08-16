@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import hre from "hardhat";
-const ethers = hre.ethers;
+import hardhat from "hardhat";
+const { ethers } = hardhat as any;
 
 describe("EscrowManager", function() {
   it("creates and releases escrow", async function() {
