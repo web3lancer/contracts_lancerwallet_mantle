@@ -1,7 +1,11 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { ethers } from "ethers";
 import hre from "hardhat";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function main() {
   // Get network name from command line or default to hardhat
@@ -31,7 +35,11 @@ async function main() {
   const provider = new ethers.JsonRpcProvider(rpcUrl);
   
   const deployer = new ethers.Wallet(privateKey, provider);
+  
+  // Get current nonce to avoid nonce conflicts
+  const currentNonce = await provider.getTransactionCount(deployer.address);
   console.log("Deploying with:", deployer.address);
+  console.log("Current nonce:", currentNonce);
 
   const deploymentsDir = path.join(__dirname, "..", "deployments");
   if (!fs.existsSync(deploymentsDir)) fs.mkdirSync(deploymentsDir, { recursive: true });

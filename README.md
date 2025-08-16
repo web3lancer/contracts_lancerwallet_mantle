@@ -1,57 +1,65 @@
-# Sample Hardhat 3 Beta Project (`mocha` and `ethers`)
+# Web3Lancer Contracts - Mantle
 
-This project showcases a Hardhat 3 Beta project using `mocha` for tests and the `ethers` library for Ethereum interactions.
+Smart contracts for the Web3Lancer platform deployed on Mantle network.
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+## Contracts
 
-## Project Overview
+### Core Contracts
+- **EscrowManager**: Handles escrow creation, release, and refunds for freelance payments
+- **Identity**: Manages user registration and KYC verification
+- **ReputationRegistry**: Tracks user reputation through reviews and ratings
 
-This example project includes:
+## Deployment
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using `mocha` and ethers.js
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+### Mantle Sepolia Testnet
 
-## Usage
+Latest deployment addresses:
 
-### Running Tests
+| Contract | Address |
+|----------|---------|
+| EscrowManager | `0x6ff1561da1cce79765E2F541196894F9EF0BC170` |
+| Identity | `0xb97A756bC016FaA099AFE4c9e2e8FA6E9F55c05a` |
+| ReputationRegistry | `0xa71e7C9516b835b4A543568E4f5FC78d628FaC48` |
 
-To run all the tests in the project, execute the following command:
+### Deploy Commands
 
-```shell
+1. Set up environment:
+```bash
+cp .env.sample .env
+# Fill in PRIVATE_KEY and MANTLE_SEPOLIA_RPC_URL
+```
+
+2. Compile contracts:
+```bash
+npx hardhat compile
+```
+
+3. Deploy to Mantle Sepolia:
+```bash
+npx hardhat run --network mantleSepolia scripts/deploy.ts
+```
+
+4. Deploy to Mantle Mainnet:
+```bash
+npx hardhat run --network mantle scripts/deploy.ts
+```
+
+### Network Configuration
+
+- **Mantle Sepolia**: Chain ID 5003
+- **RPC URL**: https://rpc.sepolia.mantle.xyz
+- **Explorer**: https://sepolia.mantlescan.xyz
+- **Faucet**: https://faucet.sepolia.mantle.xyz
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run tests
 npx hardhat test
-```
 
-You can also selectively run the Solidity or `mocha` tests:
-
-```shell
-npx hardhat test solidity
-npx hardhat test mocha
-```
-
-### Make a deployment to Sepolia
-
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
-
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
-
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
-
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
-
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
-
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-```
-
-After setting the variable, you can run the deployment with the Sepolia network:
-
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
+# Start local node
+npx hardhat node
 ```
